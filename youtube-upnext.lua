@@ -677,7 +677,10 @@ local function add_to_playlist(path, title, length, flag)
         length = 0
     end
     local playlist = "memory://#EXTM3U\n#EXTINF:" .. tostring(length) .. "," .. title .. "\n" .. path
-    mp.commandv("loadlist", playlist, flag)
+	mp.commandv("loadlist", playlist, flag)
+	if flag ~= "replace" then
+		mp.commandv("script-message", "add_to_queue", path)
+	end
 end
 
 local function on_file_start(_)
